@@ -1,16 +1,20 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Palette, Menu } from "lucide-react";
+import { Palette } from "lucide-react";
 import CartButton from "@/components/cart/CartButton";
+import MobileNav from "./MobileNav";
 
 export default function Header() {
   return (
     <header className="sticky top-0 z-40 border-b bg-background/95 backdrop-blur">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link href="/" className="flex items-center gap-2">
-          <Palette className="size-6 text-primary" />
-          <span className="text-xl font-bold">Hansy Gallery</span>
-        </Link>
+        <div className="flex items-center gap-2">
+          <MobileNav />
+          <Link href="/" className="flex items-center gap-2">
+            <Palette className="size-6 text-primary" />
+            <span className="text-xl font-bold">Hansy Gallery</span>
+          </Link>
+        </div>
         <nav className="hidden items-center gap-6 md:flex">
           <Link
             href="/"
@@ -31,9 +35,6 @@ export default function Header() {
         </nav>
         <div className="flex items-center gap-2 md:hidden">
           <CartButton />
-          <Button variant="ghost" size="icon">
-            <Menu className="size-5" />
-          </Button>
         </div>
       </div>
     </header>
