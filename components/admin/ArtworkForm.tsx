@@ -13,7 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CATEGORIES, MEDIUMS } from "@/lib/constants";
-import type { Artwork, CreateArtworkDto, UpdateArtworkDto } from "@/store/types/artwork.types";
+import type { Artwork, CreateArtworkDto } from "@/store/types/artwork.types";
 
 interface ArtworkFormProps {
   onSubmit: (data: CreateArtworkDto) => void | Promise<void>;
