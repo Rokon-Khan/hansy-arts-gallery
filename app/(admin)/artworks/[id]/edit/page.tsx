@@ -9,7 +9,7 @@ import ArtworkForm from "@/components/admin/ArtworkForm";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft } from "lucide-react";
-import type { UpdateArtworkDto } from "@/store/types/artwork.types";
+import type { CreateArtworkDto } from "@/store/types/artwork.types";
 
 export default function EditArtworkPage() {
   const params = useParams();
@@ -24,7 +24,7 @@ export default function EditArtworkPage() {
     }
   }, [dispatch, id]);
 
-  const handleSubmit = async (data: UpdateArtworkDto) => {
+  const handleSubmit = async (data: CreateArtworkDto) => {
     await dispatch(updateArtwork({ ...data, id }));
     router.push("/admin/dashboard");
   };

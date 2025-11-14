@@ -16,7 +16,7 @@ import { CATEGORIES, MEDIUMS } from "@/lib/constants";
 import type { Artwork, CreateArtworkDto, UpdateArtworkDto } from "@/store/types/artwork.types";
 
 interface ArtworkFormProps {
-  onSubmit: (data: CreateArtworkDto | UpdateArtworkDto) => void;
+  onSubmit: (data: CreateArtworkDto) => void | Promise<void>;
   initialData?: Artwork;
 }
 
