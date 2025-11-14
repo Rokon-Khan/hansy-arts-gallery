@@ -8,6 +8,7 @@ import { Eye, ShoppingCart } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
 import { useAppDispatch } from "@/store/hooks";
 import { addToCart } from "@/store/slices/cartSlice";
+import { toast } from "sonner";
 import type { Artwork } from "@/store/types/artwork.types";
 
 interface ArtworkCardProps {
@@ -20,6 +21,9 @@ export default function ArtworkCard({ artwork }: ArtworkCardProps) {
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     dispatch(addToCart(artwork));
+    toast.success("Added to cart", {
+      description: `${artwork.title} has been added to your cart.`,
+    });
   };
   return (
     <Card className="group overflow-hidden transition-shadow hover:shadow-lg">

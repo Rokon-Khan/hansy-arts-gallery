@@ -7,6 +7,7 @@ import { clearCart } from "@/store/slices/cartSlice";
 import CartItem from "@/components/cart/CartItem";
 import CartSummary from "@/components/cart/CartSummary";
 import { ArrowLeft, ShoppingCart } from "lucide-react";
+import { toast } from "sonner";
 
 export default function CartPage() {
   const dispatch = useAppDispatch();
@@ -15,6 +16,9 @@ export default function CartPage() {
   const handleClearCart = () => {
     if (confirm("Are you sure you want to clear your cart?")) {
       dispatch(clearCart());
+      toast.success("Cart cleared", {
+        description: "All items have been removed from your cart.",
+      });
     }
   };
 

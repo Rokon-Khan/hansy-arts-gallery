@@ -6,6 +6,7 @@ import { Minus, Plus, Trash2 } from "lucide-react";
 import { useAppDispatch } from "@/store/hooks";
 import { removeFromCart, updateQuantity } from "@/store/slices/cartSlice";
 import { formatPrice } from "@/lib/utils";
+import { toast } from "sonner";
 import type { CartItem as CartItemType } from "@/store/types/cart.types";
 
 interface CartItemProps {
@@ -27,6 +28,9 @@ export default function CartItem({ item }: CartItemProps) {
 
   const handleRemove = () => {
     dispatch(removeFromCart(item.id));
+    toast.success("Removed from cart", {
+      description: `${item.title} has been removed from your cart.`,
+    });
   };
 
   return (

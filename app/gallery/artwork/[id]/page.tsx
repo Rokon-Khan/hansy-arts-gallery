@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, ShoppingCart, Heart } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
+import { toast } from "sonner";
 
 export default function ArtworkDetailPage() {
   const params = useParams();
@@ -22,7 +23,13 @@ export default function ArtworkDetailPage() {
   const handleAddToCart = () => {
     if (selectedArtwork) {
       dispatch(addToCart(selectedArtwork));
-      router.push("/cart");
+      toast.success("Added to cart", {
+        description: `${selectedArtwork.title} has been added to your cart.`,
+        action: {
+          label: "View Cart",
+          onClick: () => router.push("/cart"),
+        },
+      });
     }
   };
 
