@@ -1,9 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Eye } from "lucide-react";
+import { Eye, ShoppingCart } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
+import { useAppDispatch } from "@/store/hooks";
+import { addToCart } from "@/store/slices/cartSlice";
 import type { Artwork } from "@/store/types/artwork.types";
 
 interface ArtworkCardProps {
@@ -11,6 +15,12 @@ interface ArtworkCardProps {
 }
 
 export default function ArtworkCard({ artwork }: ArtworkCardProps) {
+  const dispatch = useAppDispatch();
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    dispatch(addToCart(artwork));
+  };
   return (
     <Card className="group overflow-hidden transition-shadow hover:shadow-lg">
       <CardContent className="p-0">
@@ -37,17 +47,27 @@ export default function ArtworkCard({ artwork }: ArtworkCardProps) {
           <h3 className="line-clamp-1 text-lg font-semibold">{artwork.title}</h3>
           <p className="line-clamp-1 text-sm text-muted-foreground">{artwork.artist}</p>
         </div>
-        <div className="flex w-full items-center justify-between">
+        <div className="flex w-full items-center justify-between gap-2">
           <div>
             <p className="text-lg font-bold">{formatPrice(artwork.price)}</p>
             <p className="text-xs text-muted-foreground">{artwork.year}</p>
           </div>
-          <Button asChild size="sm">
-            <Link href={`/gallery/artwork/${artwork.id}`}>
-              <Eye className="mr-2 size-4" />
-              View
-            </Link>
-          </Button>
+          <div className="flex gap-2">
+            <Button asChild size="sm" variant="outline">
+              <Link href={`/gallery/artwork/${artwork.id}`}>
+                <Eye className="mr-2 size-4" />
+                View
+              </Link>
+            </Button>
+            <Button
+              size="sm"
+              onClick={handleAddToCart}
+              disabled={artwork.availability !== "available"}
+            >
+              <ShoppingCart className="mr-2 size-4" />
+              Add
+            </Button>
+          </div>
         </div>
       </CardFooter>
     </Card>

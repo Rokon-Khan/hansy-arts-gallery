@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Palette } from "lucide-react";
+import { Palette, Menu } from "lucide-react";
+import CartButton from "@/components/cart/CartButton";
 
 export default function Header() {
   return (
@@ -23,10 +24,17 @@ export default function Header() {
           >
             Gallery
           </Link>
+          <CartButton />
           <Button asChild variant="outline" size="sm">
             <Link href="/admin/dashboard">Admin</Link>
           </Button>
         </nav>
+        <div className="flex items-center gap-2 md:hidden">
+          <CartButton />
+          <Button variant="ghost" size="icon">
+            <Menu className="size-5" />
+          </Button>
+        </div>
       </div>
     </header>
   );
