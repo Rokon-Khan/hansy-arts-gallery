@@ -18,7 +18,7 @@ export interface Pagination {
 export interface GalleryState {
   filters: GalleryFilters;
   pagination: Pagination;
-  viewType: 'grid' | 'list';
+  viewType: 'grid' | 'list' | 'masonry';
 }
 
 export type SortOption = 'latest' | 'oldest' | 'price-low' | 'price-high' | 'title-asc' | 'title-desc';

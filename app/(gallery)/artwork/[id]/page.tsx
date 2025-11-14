@@ -1,21 +1,30 @@
 "use client";
 
 import { useEffect } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { fetchArtworkById } from "@/store/slices/artworkSlice";
+import { addToCart } from "@/store/slices/cartSlice";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ShoppingCart, Heart } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
 
 export default function ArtworkDetailPage() {
   const params = useParams();
+  const router = useRouter();
   const id = params.id as string;
   const dispatch = useAppDispatch();
   const { selectedArtwork, loading, error } = useAppSelector((state) => state.artwork);
+
+  const handleAddToCart = () => {
+    if (selectedArtwork) {
+      dispatch(addToCart(selectedArtwork));
+      router.push("/cart");
+    }
+  };
 
   useEffect(() => {
     if (id) {
@@ -119,9 +128,27 @@ export default function ArtworkDetailPage() {
           </div>
 
           <div className="flex gap-4">
-            <Button className="flex-1" disabled={selectedArtwork.availability !== 'available'}>
-              {selectedArtwork.availability === 'available' ? 'Inquire' : 'Not Available'}
+            <Button
+              className="flex-1"
+              size="lg"
+              disabled={selectedArtwork.availability !== 'available'}
+              onClick={handleAddToCart}
+            >
+              <ShoppingCart className="mr-2 size-5" />
+              {selectedArtwork.availability === 'available' ? 'Add to Cart' : 'Not Available'}
             </Button>
+            <Button variant="outline" size="lg">
+              <Heart className="mr-2 size-5" />
+              Save
+            </Button>
+          </div>
+
+          <div className="rounded-lg border bg-muted/20 p-4">
+            <h3 className="mb-2 font-semibold">About this piece</h3>
+            <p className="text-sm text-muted-foreground">
+              All artworks come with a certificate of authenticity. Free shipping on orders over $500.
+              Returns accepted within 14 days.
+            </p>
           </div>
         </div>
       </div>
