@@ -56,7 +56,7 @@ const gallerySlice = createSlice({
         setTotal(state, action: PayloadAction<number>) {
             state.pagination.total = action.payload;
         },
-        setView(state, action: PayloadAction<'grid' | 'list'>) {
+        setView(state, action: PayloadAction<'grid' | 'list' | 'masonry'>) {
             state.viewType = action.payload;
         },
         resetFilters(state) {

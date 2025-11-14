@@ -3,15 +3,23 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { fetchArtworks } from "@/store/slices/artworkSlice";
+import { setView } from "@/store/slices/gallerySlice";
 import ArtworkGrid from "@/components/gallery/ArtworkGrid";
+import MasonryGrid from "@/components/gallery/MasonryGrid";
 import FilterPanel from "@/components/gallery/FilterPanel";
 import SearchBar from "@/components/gallery/SearchBar";
 import Pagination from "@/components/gallery/Pagination";
+import { Button } from "@/components/ui/button";
+import { Grid, LayoutGrid } from "lucide-react";
 
 export default function GalleryPage() {
   const dispatch = useAppDispatch();
   const { artworks, loading, total } = useAppSelector((state) => state.artwork);
-  const { pagination, filters } = useAppSelector((state) => state.gallery);
+  const { pagination, filters, viewType } = useAppSelector((state) => state.gallery);
+
+  const toggleView = () => {
+    dispatch(setView(viewType === "grid" ? "masonry" : "grid"));
+  };
 
   useEffect(() => {
     dispatch(fetchArtworks());
@@ -26,8 +34,26 @@ export default function GalleryPage() {
         </p>
       </div>
 
-      <div className="mb-6">
+      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <SearchBar />
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={toggleView}
+          className="w-fit"
+        >
+          {viewType === "grid" ? (
+            <>
+              <LayoutGrid className="mr-2 size-4" />
+              Masonry View
+            </>
+          ) : (
+            <>
+              <Grid className="mr-2 size-4" />
+              Grid View
+            </>
+          )}
+        </Button>
       </div>
 
       <div className="flex flex-col gap-6 lg:flex-row">
@@ -48,7 +74,11 @@ export default function GalleryPage() {
             </div>
           ) : (
             <>
-              <ArtworkGrid artworks={artworks} />
+              {viewType === "grid" ? (
+                <ArtworkGrid artworks={artworks} />
+              ) : (
+                <MasonryGrid artworks={artworks} />
+              )}
               <div className="mt-8">
                 <Pagination
                   currentPage={pagination.page}
